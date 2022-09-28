@@ -1,0 +1,75 @@
+@using HaLowNetwork.WSG300NRC.Monitoring.Blazor.Pages.Components;
+@using System.Collections
+
+
+
+@foreach (var property in Node.GetType().GetProperties().OrderBy(x=>x.PropertyType.IsPrimitive))
+{
+    if (property.PropertyType == typeof(DateTime) || property.PropertyType == typeof(int) || property.PropertyType == typeof(Single) || property.PropertyType == typeof(float) || property.PropertyType == typeof(string))
+    {
+        @if (property.GetValue(Node) == null)
+        {
+            <p>@property.Name: null (@property.PropertyType)</p>
+        }
+        else
+        {
+            <p>@property.Name: @property.GetValue(Node).ToString() (@property.PropertyType)</p>
+        }
+    }
+    else if (typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
+    {
+        <div style="border-left: #0a53be 2px solid; margin-left: 15px; padding-left: 15px;">
+            <CollapsableDebugView Title="@($"{property.Name} [Collection]")">
+                 @if (property.GetValue(Node) == null)
+                            {
+                                <p>null</p>
+                            }
+                            else
+                            {
+                                <div>
+                                    @{
+                                        var data = (property.GetValue(Node) as IEnumerable);
+                                    }
+                                    @foreach (var val in data)
+                                    {
+                
+                                        <div>
+                                            @if (val.GetType() == typeof(DateTime) || val.GetType() == typeof(int) || val.GetType() == typeof(Single) || val.GetType() == typeof(float) || val.GetType() == typeof(string))
+                                            {
+                                                @val.ToString()
+                                            }
+                                            else
+                                            {
+                                                <SubDebugItem Node="val"></SubDebugItem>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            }
+            </CollapsableDebugView>
+        </div>
+    }
+    else
+    {
+        <div style="border-left: #26b050 2px solid; margin-left: 25px;padding-left: 15px;">
+            <CollapsableDebugView Title="@($"{@property.Name} ({@property.PropertyType})")">
+                @if (property.GetValue(Node) == null)
+                {
+                    <p>null</p>
+                }
+                else
+                {
+                    <SubDebugItem Node="property.GetValue(Node)"></SubDebugItem>
+                }
+            </CollapsableDebugView>
+        </div>
+    }
+}
+
+
+@code {
+
+    [Parameter]
+    public object Node { get; set; }
+
+}

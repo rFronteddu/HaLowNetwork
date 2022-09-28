@@ -1,1 +1,39 @@
 @page "/Debug"
+@using HaLowNetwork.WSG300NRC.Parse.Models
+@using HaLowNetwork.WSG300NRC.Monitoring.Blazor.Services
+@using HaLowNetwork.WSG300NRC.Monitoring.Blazor.Pages.Components;
+@inject SerialPortService _serial
+
+@if (_last == null)
+{
+    <p>Waiting for data...</p>
+}
+else
+{
+    <CollapsableDebugView Title="Local AP">
+        <DebugItem Node="_last"></DebugItem>
+    </CollapsableDebugView>
+}
+
+
+
+
+
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        _serial.MessageReceived += Received;
+    }
+
+    private ApReport _last;
+
+    private void Received(ApReport report)
+    {
+        _last = report;
+
+        InvokeAsync((() => StateHasChanged()));
+    }
+
+}
