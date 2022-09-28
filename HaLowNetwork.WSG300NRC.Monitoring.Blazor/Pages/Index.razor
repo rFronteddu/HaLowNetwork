@@ -1,0 +1,93 @@
+﻿@page "/"
+@using HaLowNetwork.WSG300NRC.Monitoring.Blazor.Services
+@using HaLowNetwork.WSG300NRC.Parse.Models
+@inject SerialPortService _serial
+
+@if (_last == null)
+{
+    <PageTitle>Waiting</PageTitle>
+    <p>Wainting for data...</p>
+}
+else
+{
+    <PageTitle>[Updated] @_last.TimeStamp.ToString("hh:mm:ss")</PageTitle>
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Local: @_last.Local.Address</h3>
+            <p>Chip temperature: @_last.Temperature°C Voltage: @_last.Vcc V</p>
+        </div>
+        <div class="col-lg-4">
+
+            <div>
+                <h4>Channels: (@_last.Local.Chn)</h4>
+
+                <table class="table">
+                    <tr>
+                        <th>Channel</th>
+                        <th>BGR</th>
+                    </tr>
+                    @for (int i = 0; i < _last.Chanals.Frequencies.Length; i++)
+                    {
+                        <tr>
+                            <td>@_last.Chanals.Frequencies[i].ToString("n2")</td>
+                            <td>@_last.Bgr.Gains[i]</td>
+                        </tr>
+                    }
+                </table>
+
+            </div>
+
+        </div>
+        <div class="col-8">
+            <h4>Clients (@_last.Clients.Count)</h4>
+            <table class="table">
+                <tr>
+                    <th>Id</th>
+                    <th>Address</th>
+                    <th>Tx</th>
+                    <th>Rx</th>
+                </tr>
+
+                @foreach (var client in _last.Clients)
+                {
+                    <tr>
+                        <td>@client.Id</td>
+                        <td>@client.Address</td>
+                        <td>@client.Tx.Data.Size @client.Tx.Data.SizeUnits / @client.Tx.Data.Speed @client.Tx.Data.SpeedUnits</td>
+                        <td>@client.Rx.Data.Size @client.Rx.Data.SizeUnits / @client.Rx.Data.Speed @client.Rx.Data.SpeedUnits</td>
+                    </tr>
+                }
+
+                <tfoot>
+                 </tfoot>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>@_last.Tx.Data.Size @_last.Tx.Data.SizeUnits / @_last.Tx.Data.Speed @_last.Tx.Data.SpeedUnits</td>
+                    <td>@_last.Rx.Data.Size @_last.Rx.Data.SizeUnits / @_last.Rx.Data.Speed @_last.Rx.Data.SpeedUnits</td>
+                </tr>
+               
+
+            </table>
+        </div>
+    </div>
+}
+
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        _serial.MessageReceived += Received;
+    }
+
+    private ApReport _last;
+
+    private void Received(ApReport report)
+    {
+        _last = report;
+
+        InvokeAsync((() => StateHasChanged()));
+    }
+
+}

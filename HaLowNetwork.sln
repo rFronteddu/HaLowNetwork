@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaLowNetwork.WSG300NRC.Monitoring.Blazor", "HaLowNetwork.WSG300NRC.Monitoring.Blazor\HaLowNetwork.WSG300NRC.Monitoring.Blazor.csproj", "{DA86736D-73D5-4E54-AE24-0A6FFCC8CD5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaLowNetwork.Utils", "HaLowNetwork.Utils\HaLowNetwork.Utils.csproj", "{92EDB0DE-EBDA-45D0-A04D-52102F0DDF16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaLow.Console.Serial.Test", "HaLow.Console.Serial.Test\HaLow.Console.Serial.Test.csproj", "{5F699D0A-A0B5-470E-AA83-2C6FB37C60DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaLowNetwork.WSG300NRC.Parse", "HaLowNetwork.WSG300NRC.Parse\HaLowNetwork.WSG300NRC.Parse.csproj", "{C6E5EA6D-607B-46EA-917F-76B6416567DA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA86736D-73D5-4E54-AE24-0A6FFCC8CD5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA86736D-73D5-4E54-AE24-0A6FFCC8CD5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA86736D-73D5-4E54-AE24-0A6FFCC8CD5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA86736D-73D5-4E54-AE24-0A6FFCC8CD5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92EDB0DE-EBDA-45D0-A04D-52102F0DDF16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92EDB0DE-EBDA-45D0-A04D-52102F0DDF16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92EDB0DE-EBDA-45D0-A04D-52102F0DDF16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92EDB0DE-EBDA-45D0-A04D-52102F0DDF16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F699D0A-A0B5-470E-AA83-2C6FB37C60DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F699D0A-A0B5-470E-AA83-2C6FB37C60DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F699D0A-A0B5-470E-AA83-2C6FB37C60DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F699D0A-A0B5-470E-AA83-2C6FB37C60DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6E5EA6D-607B-46EA-917F-76B6416567DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6E5EA6D-607B-46EA-917F-76B6416567DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6E5EA6D-607B-46EA-917F-76B6416567DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6E5EA6D-607B-46EA-917F-76B6416567DA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
