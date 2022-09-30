@@ -23,8 +23,15 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\HaLowNetwork.Blazor.Components\HaLowNetwork.Blazor.Components.csproj" />
       <ProjectReference Include="..\HaLowNetwork.Utils\HaLowNetwork.Utils.csproj" />
       <ProjectReference Include="..\HaLowNetwork.WSG300NRC.Parse\HaLowNetwork.WSG300NRC.Parse.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\Components\CollapsableDebugView.razor" />
+      <_ContentIncludedByDefault Remove="Pages\Components\DebugItem.razor" />
+      <_ContentIncludedByDefault Remove="Pages\Components\SubDebugItem.razor" />
     </ItemGroup>
 
 </Project>

@@ -78,7 +78,7 @@ else
 
     protected override void OnInitialized()
     {
-        _serial.MessageReceived += Received;
+        _serial.ApReportReceived += Received;
     }
 
     private ApReport _last;

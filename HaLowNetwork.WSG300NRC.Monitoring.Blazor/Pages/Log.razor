@@ -1,0 +1,43 @@
+@page "/Log"
+@using HaLowNetwork.WSG300NRC.Monitoring.Blazor.Services
+@inject SerialPortService _serial
+@implements IDisposable
+
+<div style="overflow-y: scroll; height: 300px;">
+    @for (int i = _log.Count-1; i >=0; i--)
+    {
+        <p>
+            @_log[i]
+        </p>
+    }
+</div>
+
+
+
+
+@code {
+
+    private List<string> _log = new();
+
+    protected override void OnInitialized()
+    {
+        _serial.MessageReceived += MessageReceived;
+    }
+
+    private void MessageReceived(string messsage)
+    {
+        _log.Add(messsage);
+
+        InvokeAsync((() =>
+        {
+            StateHasChanged();
+        }));
+     
+    }
+
+    public void Dispose()
+    {
+        _serial.MessageReceived -= MessageReceived;
+    }
+
+}

@@ -16,9 +16,13 @@ public class SerialPortService
 
     private string _data = string.Empty;
 
-    public delegate void SerialMessage(ApReport? report);
+    public delegate void SerialReport(ApReport? report);
+    public event SerialReport ApReportReceived;
+
+    public delegate void SerialMessage(string message);
 
     public event SerialMessage MessageReceived;
+    
 
     public SerialPortService(IConfiguration config)
     {
@@ -52,7 +56,8 @@ public class SerialPortService
                 {
                     try
                     {
-                        MessageReceived.Invoke(SerialParser.FromString(_data.Replace("\r",string.Empty)));
+                        ApReportReceived.Invoke(SerialParser
+                            .FromString(_data.Replace("\r",string.Empty)));
                     }
                     catch (Exception e)
                     {
@@ -61,6 +66,8 @@ public class SerialPortService
                    
                     _data = string.Empty;
                 }
+                
+                MessageReceived?.Invoke(data);
                 _data += data;
 
             }));

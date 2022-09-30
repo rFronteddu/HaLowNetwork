@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>HaLow.Blazor.Components</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Content Include="CollapsableDebugView.razor">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </Content>
+      <Content Include="DebugItem.razor">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </Content>
+      <Content Include="SubDebugItem.razor">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.9" />
+      <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.9" />
+    </ItemGroup>
+
+</Project>
