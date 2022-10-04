@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -8,6 +9,10 @@ using HaLowNetwork.SX_NEWAH_EVK.Monitoring.Blazor.Areas.Identity;
 using HaLowNetwork.SX_NEWAH_EVK.Monitoring.Blazor.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.UseKestrel(configure =>
+{
+    configure.Listen(System.Net.IPAddress.Any, 5055);
+});
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -48,5 +53,6 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
+
 
 app.Run();
