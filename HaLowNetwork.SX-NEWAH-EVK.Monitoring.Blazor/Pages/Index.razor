@@ -33,7 +33,7 @@ Welcome to your new app.
             Console.WriteLine("cd");
             client.RunCommand("cd /home/pi/nrc_pkg/script/");
             Console.WriteLine(
-            client.RunCommand("ls"));
+            client.RunCommand("ls").Result);
             var output = client.RunCommand("./stop.py"); //start.py 4 3 US 0
             client.Disconnect();
             Console.WriteLine(output.Result);
