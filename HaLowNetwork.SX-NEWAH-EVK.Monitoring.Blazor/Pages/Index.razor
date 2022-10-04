@@ -3,11 +3,12 @@
 @using System.Text
 @using IronPython.Hosting
 @using Microsoft.Scripting.Hosting
+@using Renci.SshNet
 @page "/"
 
 <PageTitle>Index</PageTitle>
 
-<h1 @onclick="run_cmd">Hello, world!</h1>
+<h1 @onclick="Ssh">Hello, world!</h1>
 
 Welcome to your new app.
 
@@ -15,6 +16,24 @@ Welcome to your new app.
 
 
 @code{
+
+    private void Ssh()
+    {
+        string user = "pi";
+        string pass = "raspberry";
+        string host = "127.0.0.1";
+
+    //Set up the SSH connection
+        
+        using (var client = new SshClient(host, user, pass))
+        {
+    //Start the connection
+            client.Connect();
+            var output = client.RunCommand("/home/pi/nrc_pkg/script/start.py 4 3 US 0");
+            client.Disconnect();
+            Console.WriteLine(output.Result);
+        }
+    }
 
     private void run_cmd()
     {
