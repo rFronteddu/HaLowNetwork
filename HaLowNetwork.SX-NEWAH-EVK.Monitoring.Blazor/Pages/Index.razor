@@ -7,7 +7,7 @@
 
 <PageTitle>Index</PageTitle>
 
-<h1 @onclick="RunPy">Hello, world!</h1>
+<h1 @onclick="run_cmd">Hello, world!</h1>
 
 Welcome to your new app.
 
@@ -16,11 +16,11 @@ Welcome to your new app.
 
 @code{
 
-    private void run_cmd(string cmd, string args)
+    private void run_cmd()
     {
         ProcessStartInfo start = new ProcessStartInfo();
-        start.FileName = "/nrc_pkg/script/";
-        start.Arguments = string.Format("{0} {1}", cmd, args);
+        start.FileName = "/home/pi/nrc_pkg/script/start.py";
+        start.Arguments = string.Format("4 3 US 0");
         start.UseShellExecute = false;
         start.RedirectStandardOutput = true;
         using(Process process = Process.Start(start))
