@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaLowNetwork.Blazor.Compone
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaLowNetwork.SX-NEWAH-EVK.Monitoring.Blazor", "HaLowNetwork.SX-NEWAH-EVK.Monitoring.Blazor\HaLowNetwork.SX-NEWAH-EVK.Monitoring.Blazor.csproj", "{29618FCE-9189-4830-A4E9-B6877760E9FC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaLow.Console.SSH.Test", "HaLow.Console.SSH.Test\HaLow.Console.SSH.Test.csproj", "{929EF81B-17AE-469A-A3C3-76292D243BEE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{29618FCE-9189-4830-A4E9-B6877760E9FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29618FCE-9189-4830-A4E9-B6877760E9FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29618FCE-9189-4830-A4E9-B6877760E9FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{929EF81B-17AE-469A-A3C3-76292D243BEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{929EF81B-17AE-469A-A3C3-76292D243BEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{929EF81B-17AE-469A-A3C3-76292D243BEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{929EF81B-17AE-469A-A3C3-76292D243BEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

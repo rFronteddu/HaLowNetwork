@@ -4,6 +4,7 @@
 @using IronPython.Hosting
 @using Microsoft.Scripting.Hosting
 @using Renci.SshNet
+@using SshNet
 @page "/"
 
 <PageTitle>Index</PageTitle>
@@ -19,7 +20,7 @@ Welcome to your new app.
 
     private void Ssh()
     {
-        string user = "pi";
+       string user = "pi";
         string pass = "raspberry";
         string host = "127.0.0.1";
 
