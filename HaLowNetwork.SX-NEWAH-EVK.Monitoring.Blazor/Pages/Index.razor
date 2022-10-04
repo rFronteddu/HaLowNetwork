@@ -50,7 +50,7 @@ Welcome to your new app.
         engine.Runtime.IO.SetOutput(streamOut, Encoding.Default);
         engine.Runtime.IO.SetErrorOutput(streamErr, Encoding.Default);
 
-        var s = engine.ExecuteFile("~/nrc_pkg/script/start.py", scope);
+        var s = engine.ExecuteFile("/home/pi/nrc_pkg/script/start.py", scope);
 
         using (StreamReader r = new StreamReader(streamOut))
         {
