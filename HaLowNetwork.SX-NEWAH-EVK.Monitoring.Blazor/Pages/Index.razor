@@ -29,7 +29,8 @@ Welcome to your new app.
         {
     //Start the connection
             client.Connect();
-            var output = client.RunCommand("/home/pi/nrc_pkg/script/start.py 4 3 US 0");
+            client.RunCommand("cd /home/pi/nrc_pkg/script/");
+            var output = client.RunCommand("./stop.py"); //start.py 4 3 US 0
             client.Disconnect();
             Console.WriteLine(output.Result);
         }
