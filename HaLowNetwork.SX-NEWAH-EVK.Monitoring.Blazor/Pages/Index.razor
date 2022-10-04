@@ -32,6 +32,8 @@ Welcome to your new app.
             Console.WriteLine(client.IsConnected);
             Console.WriteLine("cd");
             client.RunCommand("cd /home/pi/nrc_pkg/script/");
+            Console.WriteLine(
+            client.RunCommand("ls"));
             var output = client.RunCommand("./stop.py"); //start.py 4 3 US 0
             client.Disconnect();
             Console.WriteLine(output.Result);
