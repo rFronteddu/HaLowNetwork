@@ -1,0 +1,28 @@
+@page "/Dhcp"
+<h3>Dhcp</h3>
+@foreach (var d in data)
+{
+    <div>
+        @d
+    </div>
+}
+
+@code {
+
+    private List<string> data = new();
+
+    protected override void OnInitialized()
+    {
+        using (var streamReader = new StreamReader(File.Open("/var/lib/misc/dnsmasq.leases",FileMode.Create)))
+        {
+            string text;
+            while ((text=streamReader.ReadLine())!=null)
+            {
+                data.Add(text);
+            }
+        }
+        
+        StateHasChanged();
+    }
+
+}
