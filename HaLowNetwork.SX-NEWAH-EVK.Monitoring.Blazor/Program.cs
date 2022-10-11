@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using HaLowNetwork.SX_NEWAH_EVK.Monitoring.Blazor.Areas.Identity;
 using HaLowNetwork.SX_NEWAH_EVK.Monitoring.Blazor.Data;
+using HaLowNetwork.SX_NEWAH_EVK.Monitoring.Blazor.Services;
+using HaLowNetwork.SX_NEWAH_EVK.Parse.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseKestrel(configure =>
@@ -26,7 +28,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services
     .AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddScoped<DhcpService>();
 
 var app = builder.Build();
 

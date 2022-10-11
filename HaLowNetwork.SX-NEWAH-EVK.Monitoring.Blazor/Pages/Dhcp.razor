@@ -1,19 +1,71 @@
 @page "/Dhcp"
+@using HaLowNetwork.SX_NEWAH_EVK.Monitoring.Blazor.Services
+@using HaLowNetwork.SX_NEWAH_EVK.Parse.Models
+@inject DhcpService _service
 <h3>Dhcp</h3>
-@foreach (var d in data)
-{
-    <div>
-        @d
-    </div>
-}
+
+
+<div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                IP
+            </th>
+            <th>
+                MAC
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Is static
+            </th>
+            <th>
+                Expire
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var lease in _leases)
+        {
+            <tr>
+                <td>
+                    @lease.Ip
+                </td>
+                <td>
+                    @lease.Mac
+                </td>
+                <td>
+                    @lease.Name
+                </td>
+                <td>
+                    @lease.Static
+                </td>
+                <td>
+                    @(lease.LeaseEnd.HasValue?lease.LeaseEnd.Value:"never")
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+
 
 @code {
 
-    private List<string> data = new();
+    private List<DhcpModel> _leases= new();
 
     protected override void OnInitialized()
     {
-        data.AddRange(File.ReadAllLines("/var/lib/misc/dnsmasq.leases"));
+        Load();
+    }
+
+    private void Load()
+    {
+        _leases.Clear();
+        _leases.AddRange(_service.Leases());
         StateHasChanged();
     }
 
