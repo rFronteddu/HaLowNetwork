@@ -3,10 +3,12 @@
 @using HaLowNetwork.SX_NEWAH_EVK.Monitoring.Blazor.Services
 @inject MeshStatusService _service
 
- <CollapsableDebugView Title="Mesh">
+ <HaLowNetwork.Blazor.Components.CollapsableDebugView Title="Mesh">
         <DebugItem Node="_service.MeshPointStatus()"></DebugItem>
-    </CollapsableDebugView>
+    </HaLowNetwork.Blazor.Components.CollapsableDebugView>
 
 @code {
     
+    
+  
 }
