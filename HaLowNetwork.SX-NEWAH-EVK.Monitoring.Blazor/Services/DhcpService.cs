@@ -18,7 +18,7 @@ public class DhcpService
 
     public IEnumerable<DhcpModel> Leases(bool forceUpdate = false)
     {
-        if ((LastUpdate - DateTime.Now).TotalMinutes > 2 || forceUpdate)
+        if ((DateTime.Now - LastUpdate).TotalMinutes > 2 || forceUpdate)
         {
             ReadFile();
             LastUpdate = DateTime.Now;
