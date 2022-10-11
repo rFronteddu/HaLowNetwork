@@ -13,15 +13,7 @@
 
     protected override void OnInitialized()
     {
-        using (var streamReader = new StreamReader(File.Open("/var/lib/misc/dnsmasq.leases",FileMode.Open)))
-        {
-            string text;
-            while ((text=streamReader.ReadLine())!=null)
-            {
-                data.Add(text);
-            }
-        }
-        
+        data.AddRange(File.ReadAllLines("/var/lib/misc/dnsmasq.leases"));
         StateHasChanged();
     }
 
