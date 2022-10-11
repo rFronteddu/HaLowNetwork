@@ -29,6 +29,8 @@ builder.Services.AddServerSideBlazor();
 builder.Services
     .AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 builder.Services.AddScoped<DhcpService>();
+builder.Services.AddScoped<SshService>();
+builder.Services.AddScoped<MeshStatusService>();
 
 var app = builder.Build();
 

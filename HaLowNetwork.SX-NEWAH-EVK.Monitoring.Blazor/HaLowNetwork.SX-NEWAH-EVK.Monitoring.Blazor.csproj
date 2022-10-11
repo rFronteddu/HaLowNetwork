@@ -24,6 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\HaLowNetwork.Blazor.Components\HaLowNetwork.Blazor.Components.csproj" />
       <ProjectReference Include="..\HaLowNetwork.SX-NEWAH-EVK.Parse\HaLowNetwork.SX-NEWAH-EVK.Parse.csproj" />
     </ItemGroup>
 

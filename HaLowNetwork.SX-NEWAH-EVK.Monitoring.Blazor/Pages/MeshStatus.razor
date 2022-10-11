@@ -1,0 +1,12 @@
+@page "/MeshStatus"
+@using HaLowNetwork.Blazor.Components;
+@using HaLowNetwork.SX_NEWAH_EVK.Monitoring.Blazor.Services
+@inject MeshStatusService _service
+
+ <CollapsableDebugView Title="Mesh">
+        <DebugItem Node="_service.MeshPointStatus()"></DebugItem>
+    </CollapsableDebugView>
+
+@code {
+    
+}
