@@ -1,0 +1,29 @@
+@page "/DeviceDetail/{Ip}"
+@page "/DeviceDetail/Mac/{Mac}"
+@using HaLowNetwork.SX_NEWAH_EVK.Monitoring.Blazor.Services
+
+<p>
+    @_test
+</p>
+
+@code {
+
+    [Parameter]
+    public string Ip { get; set; }
+    [Parameter]
+    public string Mac { get; set; }
+
+    private SshService _ssh;
+
+    string _test = "";
+
+    protected override void OnInitialized()
+    {
+        _ssh = new(Ip, "pi", "raspberry");
+
+        _test = _ssh.UseCommand("ifconfig wlan0").Result;
+        StateHasChanged();
+
+    }
+
+}

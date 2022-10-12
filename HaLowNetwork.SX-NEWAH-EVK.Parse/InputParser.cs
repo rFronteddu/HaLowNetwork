@@ -46,8 +46,8 @@ public static class InputParser
             DTime = int.Parse(status[6]),
             DRet = status[7],
             Flags = status[8],
-            //HopCount = int.Parse(status[9]),
-           // PathChange = status.Length > 10 ? status[10] : ""
+            HopCount = int.Parse(status[9]),
+           PathChange = status.Length > 10 ? status[10] : ""
         };
     }
 }

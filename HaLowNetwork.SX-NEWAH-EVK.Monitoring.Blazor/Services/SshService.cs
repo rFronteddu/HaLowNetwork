@@ -4,36 +4,42 @@ namespace HaLowNetwork.SX_NEWAH_EVK.Monitoring.Blazor.Services;
 
 public class SshService
 {
-    private IConfiguration _config;
+    private const string CONF_PATH = "SshConnection:";
 
+    private readonly string _host;
+    private readonly string _user;
+    private readonly string _password;
 
     public SshService(IConfiguration config)
     {
-        _config = config;
+        _host = config.GetValue<string>($"{CONF_PATH}Host");
+        _user = config.GetValue<string>($"{CONF_PATH}User");
+        _password = config.GetValue<string>($"{CONF_PATH}Password");
     }
 
-    private const string CONF_PATH = "SshConnection:";
+    public SshService(string host, string user, string password)
+    {
+        _host = host;
+        _user = user;
+        _password = password;
+    }
+    
 
     public SshCommand? UseCommand(string command)
     {
         SshCommand? result = null;
-        using (SshClient client = new(
-                   _config.GetValue<string>($"{CONF_PATH}Host"),
-                   _config.GetValue<string>($"{CONF_PATH}User"),
-                   _config.GetValue<string>($"{CONF_PATH}Password")))
+        using (SshClient client = new(_host, _user, _password))
         {
-
             try
             {
                 client.Connect();
                 result = client.RunCommand(command);
                 client.Disconnect();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-
         }
 
         return result;
