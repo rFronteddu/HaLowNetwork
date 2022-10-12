@@ -31,9 +31,17 @@ public class DhcpService
     {
         _leases.Clear();
 
-        foreach (var line in File.ReadLines(FILE_LEASES))
+        try
         {
-            _leases.Add(line.ToDhcpLease());
+            foreach (var line in File.ReadLines(FILE_LEASES))
+            {
+                _leases.Add(line.ToDhcpLease());
+            }
         }
+        catch (Exception e)
+        {
+          //TODO: message
+        }
+
     }
 }
