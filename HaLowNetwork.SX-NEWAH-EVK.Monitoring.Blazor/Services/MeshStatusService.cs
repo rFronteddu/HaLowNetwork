@@ -1,3 +1,4 @@
+using HaLow.Raspbian;
 using HaLowNetwork.SX_NEWAH_EVK.Parse;
 using HaLowNetwork.SX_NEWAH_EVK.Parse.Models;
 
@@ -12,13 +13,12 @@ public class MeshStatusService
     {
         _ssh = ssh;
     }
-
-    private const string STATUS_CMD = "sudo iw dev wlan0 mpath dump";
+    
     public IEnumerable<MeshPointModel> MeshPointStatus()
     {
         List<MeshPointModel> stats = new();
 
-        var result = _ssh.UseCommand(STATUS_CMD);
+        var result = _ssh.UseCommand(Commands.MPATH_WLAN0);
 
         foreach (var row in result.Result.Split("\n").Skip(1))     
         {

@@ -41,9 +41,12 @@
 
     private List<MeshPointModel> _models;
 
+    string test = "";
+
     protected override void OnInitialized()
     {
         _models = _service.MeshPointStatus().ToList();
+
         StateHasChanged();
     }
 

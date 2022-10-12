@@ -1,33 +1,92 @@
 @page "/DeviceDetail/{Ip}"
 @page "/DeviceDetail/Mac/{Mac}"
+@page "/DeviceDetail/Debug"
 @using HaLowNetwork.SX_NEWAH_EVK.Monitoring.Blazor.Services
+@using HaLowNetwork.SX_NEWAH_EVK.Parse.Models
+@using HaLow.Raspbian
+@using HaLowNetwork.SX_NEWAH_EVK.Parse
+@inject IConfiguration _config
 
-<p>
-    @_test
-</p>
+
+@if (_interface != null)
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>@_interface.Ip</h3>
+            <p>@_interface.Mac</p>
+        </div>
+        <div class="col-lg-4">
+            <b>Network</b>
+            Ip: @_interface.Ip <br/>
+            Mask: @_interface.Mask <br/>
+            BroadCast: @_interface.Broadcast <br/>
+            Flags: @_interface.Flags <br/>
+        </div>
+        <div class="col-lg-4">
+            <b>Rx</b>
+            Traffic: @_interface.Rx.Packets (@_interface.Rx.Amount @_interface.Rx.Units) <br/>
+            Errors/Dropped: @_interface.Rx.Errors / @_interface.Rx.Dropped<br/>
+        </div>
+        <div class="col-lg-4">
+            <b>Tx</b>
+            Traffic: @_interface.Tx.Packets (@_interface.Tx.Amount @_interface.Tx.Units) <br/>
+            Errors/Dropped: @_interface.Tx.Errors / @_interface.Tx.Dropped<br/>
+        </div>
+    </div>
+}
+else
+{
+    <div>
+        <h3>Error to connect</h3>
+        <p>Default credentials not working, try another one.</p>
+        <div>
+            <input type="text" placeholder="Username" @bind="_user" class="form-control"/><br/>
+            <input type="password" placeholder="Password" @bind="_password" class="form-control"/>
+            <button class="btn btn-primary">Connect</button>
+        </div>
+    </div>
+}
 
 @code {
 
     [Parameter]
     public string Ip { get; set; }
+
     [Parameter]
     public string Mac { get; set; }
 
     private SshService _ssh;
-
-    string _test = "";
+    private InterfaceModel _interface;
 
     protected override void OnInitialized()
     {
-        _ssh = new(Ip, "pi", "raspberry");
+        _user = _config.GetValue<string>($"{SshService.SSH_CONF_PATH}User");
+        _password = _config.GetValue<string>($"{SshService.SSH_CONF_PATH}Password");
 
-        var result = _ssh.UseCommand("ifconfig wlan0");
+        Load();
+    }
 
-        Console.WriteLine(result.Result);
-        Console.WriteLine("---------");
-        Console.WriteLine(result.Error);
+    private string _user;
+    private string _password;
+
+    private void Load()
+    {
+        if (string.IsNullOrEmpty(Ip))
+        {
+            _ssh = new SshService(Ip, _user, _password);
+
+            try
+            {
+                _interface = _ssh.UseCommand(Commands.IFCONFIG_WLAN0).Result.ToInterface();
+            }
+            catch (Exception e)
+            {
+                _user = string.Empty;
+                _password = string.Empty;
+            }
+        }
+
         StateHasChanged();
-
     }
 
 }
