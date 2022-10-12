@@ -21,7 +21,11 @@
     {
         _ssh = new(Ip, "pi", "raspberry");
 
-        _test = _ssh.UseCommand("ifconfig wlan0").Result;
+        var result = _ssh.UseCommand("ifconfig wlan0");
+
+        Console.WriteLine(result.Result);
+        Console.WriteLine("---------");
+        Console.WriteLine(result.Error);
         StateHasChanged();
 
     }
