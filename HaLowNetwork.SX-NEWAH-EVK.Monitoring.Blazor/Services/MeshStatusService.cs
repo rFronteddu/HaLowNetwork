@@ -20,7 +20,7 @@ public class MeshStatusService
 
         var result = _ssh.UseCommand(STATUS_CMD);
 
-        foreach (var row in result.Result.Split("\n"))     
+        foreach (var row in result.Result.Split("\n").Skip(1))     
         {
             if (!string.IsNullOrEmpty(row))
             {

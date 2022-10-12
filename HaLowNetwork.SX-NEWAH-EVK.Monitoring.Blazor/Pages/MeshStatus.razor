@@ -1,14 +1,50 @@
 @page "/MeshStatus"
-@using HaLowNetwork.Blazor.Components;
 @using HaLowNetwork.SX_NEWAH_EVK.Monitoring.Blazor.Services
+@using HaLowNetwork.SX_NEWAH_EVK.Parse.Models
 @inject MeshStatusService _service
 
- <HaLowNetwork.Blazor.Components.CollapsableDebugView Title="Mesh">
-        <DebugItem Node="_service.MeshPointStatus()"></DebugItem>
-    </HaLowNetwork.Blazor.Components.CollapsableDebugView>
+
+<div>
+    <h3>Mesh status</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Dst</th>
+            <th>Next hop</th>
+            <th>Interface</th>
+            <th>SN</th>
+            <th>Metric</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var device in _models)
+        {
+            <tr>
+                <td>@device.DstMac</td>
+                <td>@device.NextHopMac</td>
+                <td>@device.Interface</td>
+                <td>@device.SN</td>
+                <td>@device.Metric</td>
+                <td></td>
+            </tr>
+
+        }
+        </tbody>
+    </table>
+</div>
+
+
+
 
 @code {
-    
-    
-  
+
+    private List<MeshPointModel> _models;
+
+    protected override void OnInitialized()
+    {
+        _models = _service.MeshPointStatus().ToList();
+        StateHasChanged();
+    }
+
 }

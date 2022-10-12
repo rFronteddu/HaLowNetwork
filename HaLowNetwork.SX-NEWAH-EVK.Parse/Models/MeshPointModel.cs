@@ -10,7 +10,7 @@ public class MeshPointModel
     public int QLen { get; set; }
     public string ExpTime { get; set; }
     public int DTime { get; set; }
-    public int DRet { get; set; }
+    public string DRet { get; set; }
     public string Flags { get; set; }
     public int HopCount { get; set; }
     public string PathChange { get; set; }

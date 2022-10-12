@@ -31,7 +31,7 @@ public static class InputParser
             return null;
         var status = data[2].Split("\t");
 
-        if (status.Length < 10)
+        if (status.Length < 9)
             return null;
 
         return new MeshPointModel()
@@ -44,10 +44,10 @@ public static class InputParser
             QLen = int.Parse(status[3]),
             ExpTime = $"{status[4]} {status[5]}",
             DTime = int.Parse(status[6]),
-            DRet = int.Parse(status[7]),
+            DRet = status[7],
             Flags = status[8],
-            HopCount = int.Parse(status[9]),
-            PathChange = status.Length > 10 ? status[10] : ""
+            //HopCount = int.Parse(status[9]),
+           // PathChange = status.Length > 10 ? status[10] : ""
         };
     }
 }

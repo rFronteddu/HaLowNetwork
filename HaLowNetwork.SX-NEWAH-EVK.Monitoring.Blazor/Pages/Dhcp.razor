@@ -2,10 +2,9 @@
 @using HaLowNetwork.SX_NEWAH_EVK.Monitoring.Blazor.Services
 @using HaLowNetwork.SX_NEWAH_EVK.Parse.Models
 @inject DhcpService _service
-<h3>Dhcp leases</h3>
-
 
 <div>
+    <h3>Dhcp leases</h3>
     <table class="table">
         <thead>
         <tr>
@@ -43,7 +42,7 @@
                     @lease.Static
                 </td>
                 <td>
-                    @(lease.LeaseEnd.HasValue?lease.LeaseEnd.Value:"never")
+                    @(lease.LeaseEnd.HasValue ? lease.LeaseEnd.Value : "never")
                 </td>
             </tr>
         }

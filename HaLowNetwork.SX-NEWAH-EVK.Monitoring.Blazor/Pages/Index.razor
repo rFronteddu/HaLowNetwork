@@ -7,81 +7,11 @@
 @using SshNet
 @page "/"
 
-<PageTitle>Index</PageTitle>
-
-<h1 @onclick="Ssh">Hello, world!</h1>
-
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?"/>
-
-
-@code{
-
-    private void Ssh()
-    {
-       string user = "pi";
-        string pass = "raspberry";
-        string host = "127.0.0.1";
-
-    //Set up the SSH connection
-        
-        using (var client = new SshClient(host, user, pass))
-        {
-    //Start the connection
-            client.Connect();
-            Console.WriteLine(client.IsConnected);
-            Console.WriteLine("cd");
-            client.RunCommand("cd /home/pi/nrc_pkg/script/");
-            Console.WriteLine(
-            client.RunCommand("ls").Result);
-            var output = client.RunCommand("./stop.py"); //start.py 4 3 US 0
-            client.Disconnect();
-            Console.WriteLine(output.Result);
-        }
-    }
-
-    private void run_cmd()
-    {
-        ProcessStartInfo start = new ProcessStartInfo();
-        start.FileName = "/home/pi/nrc_pkg/script/start.py";
-        start.Arguments = string.Format("4 3 US 0");
-        start.UseShellExecute = false;
-        start.RedirectStandardOutput = true;
-        using(Process process = Process.Start(start))
-        {
-            using(StreamReader reader = process.StandardOutput)
-            {
-                string result = reader.ReadToEnd();
-                Console.Write(result);
-            }
-        }
-    }
-
-    private void RunPy()
-    {
-        ScriptEngine engine = Python.CreateEngine();
-        var scope = engine.CreateScope();
-
-        List<string> parameters = new();
-        parameters.Add("4"); 
-        parameters.Add("3"); 
-        parameters.Add("US"); 
-        parameters.Add("0");
-
-        scope.SetVariable("argv",parameters);
-        var streamOut = new MemoryStream();
-        var streamErr = new MemoryStream();
-        engine.Runtime.IO.SetOutput(streamOut, Encoding.Default);
-        engine.Runtime.IO.SetErrorOutput(streamErr, Encoding.Default);
-
-        var s = engine.ExecuteFile("/home/pi/nrc_pkg/script/start.py", scope);
-
-        using (StreamReader r = new StreamReader(streamOut))
-        {
-            Console.WriteLine(r.ReadToEnd());
-            
-        }
-    }
-
-}
+<div class="row">
+    <div class="col-lg-12">
+        <Dhcp></Dhcp>
+    </div>
+    <div class="col-lg-12">
+        <MeshStatus></MeshStatus>
+    </div>
+</div>
