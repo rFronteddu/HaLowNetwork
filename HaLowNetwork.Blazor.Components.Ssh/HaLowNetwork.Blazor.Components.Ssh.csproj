@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>HaLowNetwork.Blazor.Components.Ssh</RootNamespace>
+        <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.10" />
+      <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.10" />
+    </ItemGroup>
+
+</Project>

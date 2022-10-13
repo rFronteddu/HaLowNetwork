@@ -1,38 +1,39 @@
-@page "/DeviceDetail/{Ip}"
-@page "/DeviceDetail/Mac/{Mac}"
-@page "/DeviceDetail/Debug"
+@page "/DeviceDetail"
 @using HaLowNetwork.SX_NEWAH_EVK.Monitoring.Blazor.Services
 @using HaLowNetwork.SX_NEWAH_EVK.Parse.Models
 @using HaLow.Raspbian
 @using HaLowNetwork.SX_NEWAH_EVK.Parse
+@using HaLowNetwork.Blazor.Components.Ssh
 @inject IConfiguration _config
 
 
 @if (_interface != null)
 {
+    <SshContainer></SshContainer>
     <div class="row">
-        <div class="col-lg-12">
-            <h3>@_interface.Ip</h3>
-            <p>@_interface.Mac</p>
-        </div>
-        <div class="col-lg-4">
-            <b>Network</b>
-            Ip: @_interface.Ip <br/>
-            Mask: @_interface.Mask <br/>
-            BroadCast: @_interface.Broadcast <br/>
-            Flags: @_interface.Flags <br/>
-        </div>
-        <div class="col-lg-4">
-            <b>Rx</b>
-            Traffic: @_interface.Rx.Packets (@_interface.Rx.Amount @_interface.Rx.Units) <br/>
-            Errors/Dropped: @_interface.Rx.Errors / @_interface.Rx.Dropped<br/>
-        </div>
-        <div class="col-lg-4">
-            <b>Tx</b>
-            Traffic: @_interface.Tx.Packets (@_interface.Tx.Amount @_interface.Tx.Units) <br/>
-            Errors/Dropped: @_interface.Tx.Errors / @_interface.Tx.Dropped<br/>
-        </div>
-    </div>
+                <div class="col-lg-12">
+                    <h3>@_interface.Ip</h3>
+                    <p>@_interface.Mac (@_interface.Name)</p>
+                </div>
+                <div class="col-lg-4">
+                    <h6>Network</h6>
+                    Ip: @_interface.Ip <br/>
+                    Mask: @_interface.Mask <br/>
+                    BroadCast: @_interface.Broadcast <br/>
+                    Flags: @_interface.Flags <br/>
+                </div>
+                <div class="col-lg-4">
+                    <h6>Rx</h6>
+                    Traffic: @_interface.Rx.Packets (@_interface.Rx.Amount @_interface.Rx.Units) <br/>
+                    Errors/Dropped: @_interface.Rx.Errors / @_interface.Rx.Dropped<br/>
+                </div>
+                <div class="col-lg-4">
+                    <h6>Tx</h6>
+                    Traffic: @_interface.Tx.Packets (@_interface.Tx.Amount @_interface.Tx.Units) <br/>
+                    Errors/Dropped: @_interface.Tx.Errors / @_interface.Tx.Dropped<br/>
+                </div>
+            </div>
+
 }
 else
 {
@@ -50,10 +51,8 @@ else
 @code {
 
     [Parameter]
+    [SupplyParameterFromQuery(Name = "ip")]
     public string Ip { get; set; }
-
-    [Parameter]
-    public string Mac { get; set; }
 
     private SshService _ssh;
     private InterfaceModel _interface;
@@ -71,7 +70,7 @@ else
 
     private void Load()
     {
-        if (string.IsNullOrEmpty(Ip))
+        if (!string.IsNullOrEmpty(Ip))
         {
             _ssh = new SshService(Ip, _user, _password);
 

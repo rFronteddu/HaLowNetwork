@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaLowNetwork.SX-NEWAH-EVK.P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaLow.Raspbian", "HaLow.Raspbian\HaLow.Raspbian.csproj", "{233FC2B1-B06D-419F-9AB2-339B56A7EF23}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaLowNetwork.Blazor.Components.Ssh", "HaLowNetwork.Blazor.Components.Ssh\HaLowNetwork.Blazor.Components.Ssh.csproj", "{12518FA5-C14A-4625-9C86-73B560C6D58D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,5 +62,9 @@ Global
 		{233FC2B1-B06D-419F-9AB2-339B56A7EF23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{233FC2B1-B06D-419F-9AB2-339B56A7EF23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{233FC2B1-B06D-419F-9AB2-339B56A7EF23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12518FA5-C14A-4625-9C86-73B560C6D58D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12518FA5-C14A-4625-9C86-73B560C6D58D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12518FA5-C14A-4625-9C86-73B560C6D58D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12518FA5-C14A-4625-9C86-73B560C6D58D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
