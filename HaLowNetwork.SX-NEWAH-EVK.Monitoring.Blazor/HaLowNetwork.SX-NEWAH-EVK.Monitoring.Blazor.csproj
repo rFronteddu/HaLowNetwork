@@ -25,13 +25,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Halow.Blazor.Components\Halow.Blazor.Components.csproj" />
       <ProjectReference Include="..\HaLow.Raspbian\HaLow.Raspbian.csproj" />
-      <ProjectReference Include="..\HaLowNetwork.Blazor.Components.Ssh\HaLowNetwork.Blazor.Components.Ssh.csproj" />
       <ProjectReference Include="..\HaLowNetwork.SX-NEWAH-EVK.Parse\HaLowNetwork.SX-NEWAH-EVK.Parse.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Pages\Components" />
     </ItemGroup>
 
 </Project>

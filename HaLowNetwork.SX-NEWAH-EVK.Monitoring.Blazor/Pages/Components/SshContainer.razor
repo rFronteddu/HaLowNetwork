@@ -1,0 +1,82 @@
+@using HaLowNetwork.SX_NEWAH_EVK.Monitoring.Blazor.Services
+@using Renci.SshNet
+<div class="console console-container">
+    @for (int i = 0; i < _output.Count; i++)
+    {
+        <div>
+            @{
+                var result = _output[i];
+            }
+
+            @switch (result.ExitStatus)
+            {
+                case 0:
+                    <div style="color: #fff">
+                        <b>@Ssh.User@@@Ssh.Host #</b> @result.CommandText <br/> @((MarkupString)result.Result.Replace(Environment.NewLine,"<br />"))
+                    </div>
+                    break;
+                default:
+                    <div>
+                        <p>
+                            Code: @result.ExitStatus
+                        </p>
+                        <p>
+                            @result.Result
+                        </p>
+                        <p>
+                            Error: @result.Error
+                        </p>
+                    </div>
+
+                    break;
+            }
+
+        </div>
+    }
+
+<div class="console" @onkeydown="Enter" tabindex="0" >
+   <b>@Ssh.User@@@Ssh.Host #</b> <input class="console console-input" @bind="_input"/>
+</div>
+</div>
+@code {
+
+    [Parameter]
+    public SshService Ssh { get; set; }
+
+    private List<SshCommand> _output = new();
+    private string _input = string.Empty;
+
+    protected override void OnInitialized()
+    {
+    }
+
+    public void Enter(KeyboardEventArgs key)
+    {
+        if (key.Code == "Enter" || key.Code == "NumpadEnter")
+        {
+            try
+            {
+                var output = Ssh.UseCommand(_input);
+                if (output == null)
+                    return;
+
+                _output.Add(output);
+                _input = string.Empty;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                StateHasChanged();
+            }
+        }
+        else
+        {
+            
+        }
+    }
+
+}

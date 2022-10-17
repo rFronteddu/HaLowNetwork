@@ -6,6 +6,8 @@ public class SshService
 {
     public const string SSH_CONF_PATH = "SshConnection:";
 
+    public string Host => _host;
+    public string User => _user;
     private readonly string _host;
     private readonly string _user;
     private readonly string _password;

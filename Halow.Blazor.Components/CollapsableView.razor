@@ -1,12 +1,12 @@
 <div class="card">
     <div class="card-header">
         <h2 class="mb-0">
-            <button class="btn btn-link" type="button" @onclick="Toggle">
+            <button class="btn" type="button" @onclick="Toggle">
                 @Title
             </button>
         </h2>
     </div>
-    @if (_show)
+    @if (Show)
     {
         <div id="collapseOne" class="collapse show">
             <div class="card-body">
@@ -24,11 +24,12 @@
     [Parameter]
     public string Title { get; set; }
 
-    private bool _show = false;
+    [Parameter]
+    public bool Show { get; set; } = false;
 
     private void Toggle()
     {
-        _show = !_show;
+        Show = !Show;
         StateHasChanged();
     }
 

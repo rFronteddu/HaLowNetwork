@@ -3,18 +3,20 @@
 @using HaLowNetwork.SX_NEWAH_EVK.Parse.Models
 @using HaLow.Raspbian
 @using HaLowNetwork.SX_NEWAH_EVK.Parse
-@using HaLowNetwork.Blazor.Components.Ssh
 @inject IConfiguration _config
 
 
+
+<div class="row">
 @if (_interface != null)
 {
-    <SshContainer></SshContainer>
-    <div class="row">
-                <div class="col-lg-12">
-                    <h3>@_interface.Ip</h3>
-                    <p>@_interface.Mac (@_interface.Name)</p>
-                </div>
+    <div class="col-lg-12">
+        <h3>@_interface.Ip</h3>
+        <p>@_interface.Mac (@_interface.Name)</p>
+    </div>
+    <div class="col-lg-12">
+        <CollapsableView Show="true" Title="@_interface.Name">
+            <div class="row" style="padding: 5px">
                 <div class="col-lg-4">
                     <h6>Network</h6>
                     Ip: @_interface.Ip <br/>
@@ -33,20 +35,38 @@
                     Errors/Dropped: @_interface.Tx.Errors / @_interface.Tx.Dropped<br/>
                 </div>
             </div>
+        </CollapsableView>
+    </div>
+}else
+ {
+     <div class="col-lg-12">
+         <CollapsableView Title="Interface info" Show="true">
+         <h3>Error fetch data</h3>
+             <p>@_errorMessage</p>
+             @if (_login)
+             {
+                 <div id="login" style="margin: 15px">
+                     <input type="text" placeholder="Username" @bind="_user" class="form-control"/><br/>
+                     <input type="password" placeholder="Password" @bind="_password" class="form-control"/>
+                 </div>
+             }
+             else
+             {
+                 <a style="margin: 15px;" @onclick="() => { _login=!_login; StateHasChanged();}">Use different credentials</a>
+             }
 
-}
-else
-{
-    <div>
-        <h3>Error to connect</h3>
-        <p>Default credentials not working, try another one.</p>
-        <div>
-            <input type="text" placeholder="Username" @bind="_user" class="form-control"/><br/>
-            <input type="password" placeholder="Password" @bind="_password" class="form-control"/>
-            <button class="btn btn-primary">Connect</button>
+             <button class="btn btn-primary" @onclick="Load">Retry</button>
+         </CollapsableView>
+     </div>
+ }
+        <div class="col-lg-12">
+            <CollapsableView Show="true" Title="Terminal via SSH">
+                <SshContainer Ssh="_ssh"></SshContainer>
+            </CollapsableView>
         </div>
     </div>
-}
+
+
 
 @code {
 
@@ -56,6 +76,7 @@ else
 
     private SshService _ssh;
     private InterfaceModel _interface;
+    private string _errorMessage;
 
     protected override void OnInitialized()
     {
@@ -67,7 +88,8 @@ else
 
     private string _user;
     private string _password;
-
+    private bool _login = false;
+    
     private void Load()
     {
         if (!string.IsNullOrEmpty(Ip))
@@ -76,20 +98,38 @@ else
 
             try
             {
-                _interface = _ssh.UseCommand(Commands.IFCONFIG_WLAN0).Result.ToInterface();
+                var output = _ssh.UseCommand(Commands.IFCONFIG_WLAN0);
+
+                if (string.IsNullOrEmpty(output.Error))
+                {
+                    var ifc = output.Result.ToInterface();
+
+                    if (ifc==null)
+                    {
+                        _errorMessage = "Error parse interface data.";
+                    }
+                    else
+                    {
+                        _interface = ifc;
+                    }
+                }
+                else
+                {
+                    _errorMessage = output.Error; 
+                }
+               
+
             }
             catch (Exception e)
             {
-                _user = string.Empty;
-                _password = string.Empty;
-                Console.WriteLine(e);
+                _errorMessage = e.Message;
             }
         }
         else
         {
-            Console.WriteLine("Detail Ip null");
+            _errorMessage = "Ip address is null.";
         }
-
+        _login = false;
         StateHasChanged();
     }
 

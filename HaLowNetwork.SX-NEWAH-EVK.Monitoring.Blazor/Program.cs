@@ -31,6 +31,7 @@ builder.Services
 builder.Services.AddScoped<DhcpService>();
 builder.Services.AddScoped<SshService>();
 builder.Services.AddScoped<MeshStatusService>();
+builder.WebHost.UseStaticWebAssets();
 
 var app = builder.Build();
 

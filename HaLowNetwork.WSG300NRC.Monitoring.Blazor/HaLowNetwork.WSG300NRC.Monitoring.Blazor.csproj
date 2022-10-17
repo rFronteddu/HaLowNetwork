@@ -23,7 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\HaLowNetwork.Blazor.Components\HaLowNetwork.Blazor.Components.csproj" />
+      <ProjectReference Include="..\Halow.Blazor.Components\Halow.Blazor.Components.csproj" />
       <ProjectReference Include="..\HaLowNetwork.Utils\HaLowNetwork.Utils.csproj" />
       <ProjectReference Include="..\HaLowNetwork.WSG300NRC.Parse\HaLowNetwork.WSG300NRC.Parse.csproj" />
     </ItemGroup>
