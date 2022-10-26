@@ -13,13 +13,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="IronPython" Version="2.7.12" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.9" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.9" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.9" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.9" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.9" />
-        <PackageReference Include="Pcap.Net.x86" Version="1.0.4.1" />
         <PackageReference Include="SSH.NET" Version="2020.0.2" />
         <PackageReference Include="System.Device.Gpio" Version="2.2.0" />
     </ItemGroup>
