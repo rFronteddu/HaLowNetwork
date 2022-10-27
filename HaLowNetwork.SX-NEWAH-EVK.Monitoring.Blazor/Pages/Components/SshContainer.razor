@@ -35,7 +35,7 @@
     }
 
 <div class="console" @onkeydown="Enter" tabindex="0" >
-   <b>@Ssh.User@@@Ssh.Host #</b> <input class="console console-input" @bind="_input"/>
+   <b>@Ssh.User@@@Ssh.Host #</b> <input class="console console-input" @bind="_input"/><span @onclick="Send">Send</span>
 </div>
 </div>
 @code {
@@ -50,27 +50,29 @@
     {
     }
 
-    public void Enter(KeyboardEventArgs key)
+    private void Send()
+    {
+        var output = Ssh.UseCommand(_input);
+        if (output == null)
+            return;
+
+        _output.Add(output);
+        _input = string.Empty;
+        StateHasChanged();
+    }
+
+    private void Enter(KeyboardEventArgs key)
     {
         if (key.Code == "Enter" || key.Code == "NumpadEnter")
         {
             try
             {
-                var output = Ssh.UseCommand(_input);
-                if (output == null)
-                    return;
-
-                _output.Add(output);
-                _input = string.Empty;
+                Send();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 throw;
-            }
-            finally
-            {
-                StateHasChanged();
             }
         }
         else

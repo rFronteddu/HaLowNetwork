@@ -27,4 +27,5 @@
       <ProjectReference Include="..\HaLowNetwork.SX-NEWAH-EVK.Parse\HaLowNetwork.SX-NEWAH-EVK.Parse.csproj" />
     </ItemGroup>
 
+
 </Project>

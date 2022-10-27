@@ -1,11 +1,10 @@
 @page "/MeshStatus"
 @using HaLowNetwork.SX_NEWAH_EVK.Monitoring.Blazor.Services
 @using HaLowNetwork.SX_NEWAH_EVK.Parse.Models
-@inject MeshStatusService _service
+
 
 
 <div>
-    <h3>Mesh status</h3>
     <table class="table">
         <thead>
         <tr>
@@ -39,13 +38,23 @@
 
 @code {
 
+    [Inject] 
+    private MeshStatusService _localService { get; set; }
+    
+    [Parameter]
+    public MeshStatusService? Service { get; set; }
     private List<MeshPointModel> _models;
 
     string test = "";
 
     protected override void OnInitialized()
     {
-        _models = _service.MeshPointStatus().ToList();
+
+        if (Service==null)
+        {
+            Service = _localService;
+        }
+        _models = Service.MeshPointStatus().ToList();
 
         StateHasChanged();
     }
