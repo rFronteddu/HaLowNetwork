@@ -1,13 +1,20 @@
 @page "/Dhcp"
 @using HaLowNetwork.SX_NEWAH_EVK.Monitoring.Blazor.Services
 @using HaLowNetwork.SX_NEWAH_EVK.Parse.Models
+@using System.Timers
+@using System.Net.NetworkInformation
+@using System.Net
 @inject DhcpService _service
+@implements IDisposable
 
 <div>
     <h3>Dhcp leases</h3>
     <table class="table">
         <thead>
         <tr>
+            <th>
+                Status
+            </th>
             <th>
                 IP
             </th>
@@ -30,7 +37,25 @@
         {
             <tr>
                 <td>
-                    <a href="/DeviceDetail?ip=@lease.Ip" >@lease.Ip</a>
+                    @if (_ping.ContainsKey(lease.Ip))
+                    {
+                        var ping = _ping[lease.Ip];
+                        if (ping.Status==IPStatus.Success)
+                        {
+                            <span>Online</span>
+                        }
+                        else
+                        {
+                            <span>Offline</span>
+                        }
+                    }
+                    else
+                    {
+                        <span>No data</span>
+                    }
+                </td>
+                <td>
+                    <a href="/DeviceDetail?ip=@lease.Ip">@lease.Ip</a>
                 </td>
                 <td>
                     @lease.Mac
@@ -51,14 +76,41 @@
 </div>
 
 
-
 @code {
 
-    private List<DhcpModel> _leases= new();
+    private List<DhcpModel> _leases = new();
+    private Dictionary<string, PingReply> _ping = new();
 
     protected override void OnInitialized()
     {
+        _timer = new Timer();
+        _timer.Interval = 20000;
+        _timer.Elapsed += PingDevices;
         Load();
+        PingDevices(this, null);
+        _timer.Start();
+    }
+
+    private async void PingDevices(object? sender, ElapsedEventArgs args)
+    {
+        Ping p = new();
+        for (int i = 0; i < _leases.Count; i++)
+        {
+            var device = _leases[i];
+
+            var result = p.Send(IPAddress.Parse(device.Ip));
+
+            if (_ping.ContainsKey(device.Ip))
+            {
+                _ping[device.Ip] = result;
+            }
+            else
+            {
+                _ping.Add(device.Ip, result);
+            }
+
+            await InvokeAsync((() => StateHasChanged()));
+        }
     }
 
     private void Load()
@@ -66,6 +118,14 @@
         _leases.Clear();
         _leases.AddRange(_service.Leases(true));
         StateHasChanged();
+    }
+
+    private System.Timers.Timer _timer;
+
+    public void Dispose()
+    {
+        
+        _timer.Dispose();
     }
 
 }
