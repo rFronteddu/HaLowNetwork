@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseKestrel(configure =>
 {
     configure.Listen(System.Net.IPAddress.Any, 5055);
-    configure.Listen(System.Net.IPAddress.Any, 7242);
+    //configure.Listen(System.Net.IPAddress.Any, 7242);
 });
 
 // Add services to the container.
@@ -47,7 +47,7 @@ else
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
