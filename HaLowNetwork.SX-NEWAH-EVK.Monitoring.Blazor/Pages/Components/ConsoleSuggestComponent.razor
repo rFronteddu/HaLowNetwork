@@ -1,0 +1,15 @@
+<span>@Text</span>
+
+@code {
+
+    [Parameter]
+    public string Text { get; set; }
+    
+    [Parameter]
+    public string Commnand { get; set; }
+    
+    [Parameter]
+    public EventCallback<string> Click { get; set; }
+    
+}
+

@@ -16,16 +16,8 @@
                     </div>
                     break;
                 default:
-                    <div>
-                        <p>
-                            Code: @result.ExitStatus
-                        </p>
-                        <p>
-                            @result.Result
-                        </p>
-                        <p>
-                            Error: @result.Error
-                        </p>
+                    <div style="color: #a52834">
+                        <b>@Ssh.User@@@Ssh.Host #</b> @result.CommandText <br/> @((MarkupString)result.Error.Replace(Environment.NewLine,"<br />"))
                     </div>
 
                     break;
@@ -34,9 +26,12 @@
         </div>
     }
 
-<div class="console" @onkeydown="Enter" tabindex="0" >
-   <b>@Ssh.User@@@Ssh.Host #</b> <input class="console console-input" @bind="_input"/><span @onclick="Send">Send</span>
-</div>
+    <div class="console" @onkeydown="Enter" tabindex="0" >
+        <b>@Ssh.User@@@Ssh.Host #</b> <input class="console console-input" @bind="_input"/><span @onclick="Send"  style="float: right">Send</span>
+    </div>
+    <div style="padding-top:15px;">
+        <ConsoleSuggestComponent Text="Ping"></ConsoleSuggestComponent> <ConsoleSuggestComponent Text="Reboot"></ConsoleSuggestComponent>
+    </div>
 </div>
 @code {
 

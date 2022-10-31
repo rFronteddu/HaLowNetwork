@@ -18,15 +18,23 @@ public class MeshStatusService
     {
         List<MeshPointModel> stats = new();
 
-        var result = _ssh.UseCommand(Commands.MPATH_WLAN0);
-
-        foreach (var row in result.Result.Split("\n").Skip(1))     
+        try
         {
-            if (!string.IsNullOrEmpty(row))
+            var result = _ssh.UseCommand(Commands.MPATH_WLAN0);
+
+            foreach (var row in result.Result.Split("\n").Skip(1))     
             {
-                stats.Add(row.ToMeshPointStatus());
+                if (!string.IsNullOrEmpty(row))
+                {
+                    stats.Add(row.ToMeshPointStatus());
+                }
             }
         }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
 
         return stats;
     }
