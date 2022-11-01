@@ -94,14 +94,15 @@
 
     private async void PingDevices(object? sender, ElapsedEventArgs args)
     {
-        try
-        {
+        
 
             Ping p = new();
             for (int i = 0; i < _leases.Count; i++)
             {
                 new Thread(async () =>
                 {
+                    try
+                         {
                     var device = _leases[i];
 
                     var result = p.Send(IPAddress.Parse(device.Ip));
@@ -116,16 +117,16 @@
                     }
 
                     await InvokeAsync((() => StateHasChanged()));
+                         }
+                    catch
+                        (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        throw;
+                    }
                 }).Start();
         }
-    }
-    catch
-
-    (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+   
     }
 
     private void Load()
