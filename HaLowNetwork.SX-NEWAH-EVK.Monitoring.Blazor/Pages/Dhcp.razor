@@ -40,7 +40,7 @@
                     @if (_ping.ContainsKey(lease.Ip))
                     {
                         var ping = _ping[lease.Ip];
-                        if (ping.Status==IPStatus.Success)
+                        if (ping.Status == IPStatus.Success)
                         {
                             <span><span style="color: #26b050">&#9679;</span> Online</span>
                         }
@@ -73,7 +73,7 @@
         }
         </tbody>
     </table>
-    
+
 </div>
 
 
@@ -95,38 +95,39 @@
     private async void PingDevices(object? sender, ElapsedEventArgs args)
     {
         
-
-            Ping p = new();
-            for (int i = 0; i < _leases.Count; i++)
-            {
-                new Thread(async () =>
-                {
-                    try
-                         {
-                    var device = _leases[i];
-
-                    var result = p.Send(IPAddress.Parse(device.Ip));
-
-                    if (_ping.ContainsKey(device.Ip))
-                    {
-                        _ping[device.Ip] = result;
-                    }
-                    else
-                    {
-                        _ping.Add(device.Ip, result);
-                    }
-
-                    await InvokeAsync((() => StateHasChanged()));
-                         }
-                    catch
-                        (Exception e)
-                    {
-                        Console.WriteLine(e);
-                        throw;
-                    }
-                }).Start();
+        for (int i = 0; i < _leases.Count; i++)
+        {
+            ThreadPing(_leases[i].Ip);
         }
-   
+    }
+
+    private void ThreadPing(string ipAddress)
+    {
+        new Thread(async () =>
+        {
+            try
+            {
+                Ping p = new();
+                var result = p.Send(IPAddress.Parse(ipAddress));
+
+                if (_ping.ContainsKey(ipAddress))
+                {
+                    _ping[ipAddress] = result;
+                }
+                else
+                {
+                    _ping.Add(ipAddress, result);
+                }
+
+                await InvokeAsync((() => StateHasChanged()));
+            }
+            catch
+                (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }).Start();
     }
 
     private void Load()
@@ -140,7 +141,6 @@
 
     public void Dispose()
     {
-        
         _timer.Dispose();
     }
 
