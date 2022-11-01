@@ -3,6 +3,7 @@
 @using HaLowNetwork.SX_NEWAH_EVK.Parse.Models
 @using HaLow.Raspbian
 @using HaLowNetwork.SX_NEWAH_EVK.Parse
+@inject IConfiguration _config
 
 <div class="row">
 @if (_interface != null)
@@ -77,7 +78,7 @@
     private InterfaceModel _interface;
     private string _errorMessage;
 
-    private SshLoginComponent _sshLogin = new();
+    private SshLoginComponent _sshLogin;
 
     protected override void OnInitialized()
     {
@@ -91,6 +92,13 @@
     {
         if (!string.IsNullOrEmpty(Ip))
         {
+            if (_sshLogin == null)
+            {
+               var user = _config.GetValue<string>($"{SshService.SSH_CONF_PATH}User");
+               var password = _config.GetValue<string>($"{SshService.SSH_CONF_PATH}Password");
+                _ssh = new SshService(Ip, user, password);
+            }
+                else
             _ssh = _sshLogin.Service(Ip);
 
             try
