@@ -3,17 +3,20 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <Dhcp></Dhcp>
+        <CollapsableView Title="DHCP">
+            <Dhcp></Dhcp>
+        </CollapsableView>
     </div>
     <div class="col-lg-12">
-        <h3>Mesh status</h3>
-        <MeshStatus></MeshStatus>
+        <CollapsableView Title="Mesh status">
+            <MeshStatus></MeshStatus>
+            <a href="/DeviceDetail?ip=@_host">Host device(@_host)</a>
+        </CollapsableView>
     </div>
     <div class="col-lg-3">
-        <a href="/DeviceDetail?ip=@_host">Host device(@_host)</a>
-    </div>
-    <div class="col-lg-9">
-        <StartComponent></StartComponent>
+        <CollapsableView Title="Setup device">
+            <StartComponent></StartComponent>
+        </CollapsableView>
     </div>
 </div>
 
@@ -25,7 +28,7 @@
     protected override void OnInitialized()
     {
         _host = _config.GetValue<string>("SshConnection:Host");
-        
+
         StateHasChanged();
     }
 
