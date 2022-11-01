@@ -43,11 +43,12 @@
     
     [Parameter]
     public MeshStatusService? Service { get; set; }
-    private List<MeshPointModel> _models;
+
+    private List<MeshPointModel> _models = new();
 
     string test = "";
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
 
         if (Service==null)

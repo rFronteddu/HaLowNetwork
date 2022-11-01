@@ -82,7 +82,7 @@
     private List<DhcpModel> _leases = new();
     private Dictionary<string, PingReply> _ping = new();
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         _timer = new Timer();
         _timer.Interval = 20000;
