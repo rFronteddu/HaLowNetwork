@@ -1,4 +1,4 @@
-<span>@Text</span>
+<span @onclick="ClickSpan">@Text</span>
 
 @code {
 
@@ -10,6 +10,11 @@
     
     [Parameter]
     public EventCallback<string> Click { get; set; }
+
+    private async void ClickSpan()
+    {
+        await Click.InvokeAsync(Commnand);
+    }
     
 }
 
