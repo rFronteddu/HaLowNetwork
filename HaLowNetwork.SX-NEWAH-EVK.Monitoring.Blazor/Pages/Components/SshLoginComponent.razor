@@ -1,5 +1,5 @@
 @using HaLowNetwork.SX_NEWAH_EVK.Monitoring.Blazor.Services
-@inject IConfiguration _config
+
 
 <div id="login" class="margin-box">
     <input type="text" placeholder="Username" @bind="_user" class="form-control"/><br/>
@@ -9,6 +9,9 @@
 @code {
     private string _user;
     private string _password;
+    
+    [Inject]
+    private IConfiguration _config { get; set; }
 
     protected override void OnInitialized()
     {

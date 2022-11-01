@@ -5,13 +5,14 @@
     <div>
         <SshLoginComponent></SshLoginComponent>
         <div class="margin-box">
-            <input type="text" class="form-control" placeholder="Host"/><br/>
-            <select class="form-control" placeholder="Mesh mode">
+            <input type="text" class="form-control" placeholder="Host" @bind="_host"/><br/>
+            <select class="form-control" placeholder="Mesh mode" @bind="_mesh">
                 <option value="0">Mesh portal</option>
                 <option value="1">Mesh point</option>
                 <option value="2">Mesh point/AP</option>
             </select>
-            <select class="form-control" placeholder="Security">
+            <br/>
+             <select class="form-control" placeholder="Security" @bind="_security">
                 <option value="0">Open</option>
                 <option value="1">WPA2-PSK</option>
                 <option value="2">WPA3-OWE</option>
