@@ -33,8 +33,7 @@
     <div style="padding-top:15px;">
         @foreach (var s in _suggests)
         {
-            ConsoleSuggestComponent component = s;
-            <ConsoleSuggestComponent @ref="@component" Click="CommandClick"></ConsoleSuggestComponent>
+            @s
         }
     </div>
 </div>
@@ -67,17 +66,20 @@
             {
                 Text = "Ping",
                 Commnand = "ping <address> -c <count>",
+                Click = new EventCallback<string>(this, CommandClick)
             },
             new ()
             {
                 Text = "WPA status",
                 Commnand = Commands.WPA_STATUS,
+                Click = new EventCallback<string>(this, CommandClick)
             
             },
             new ()
             {
                 Text = "Reboot",
                 Commnand = Commands.REBOOT,
+                Click = new EventCallback<string>(this, CommandClick)
             
             }
         };

@@ -12,12 +12,21 @@
 
     protected override void OnInitialized()
     {
-        _user = _config.GetValue<string>($"{SshService.SSH_CONF_PATH}User");
-        _password = _config.GetValue<string>($"{SshService.SSH_CONF_PATH}Password");
+        SetValues();
+    }
+
+    private void SetValues()
+    {
+        if (string.IsNullOrEmpty(_user))
+        {
+            _user = _config.GetValue<string>($"{SshService.SSH_CONF_PATH}User");
+            _password = _config.GetValue<string>($"{SshService.SSH_CONF_PATH}Password");
+        }
     }
 
     public SshService Service(string host)
     {
+        SetValues();
         return new SshService(host, _user, _password);
     }
 
