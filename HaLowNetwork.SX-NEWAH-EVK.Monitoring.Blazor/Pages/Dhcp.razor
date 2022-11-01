@@ -97,7 +97,7 @@
         Ping p = new();
         for (int i = 0; i < _leases.Count; i++)
         {
-            new Thread(() =>
+            new Thread(async () =>
             {
                 var device = _leases[i];
 
@@ -112,7 +112,7 @@
                     _ping.Add(device.Ip, result);
                 }
 
-                InvokeAsync((() => StateHasChanged()));
+                await InvokeAsync((() => StateHasChanged()));
             }).Start();
         }
     }
