@@ -3,7 +3,7 @@
 @if (!_clicked)
 {
     <div>
-        <SshLoginComponent></SshLoginComponent>
+        <SshLoginComponent @ref="_sshLogin"></SshLoginComponent>
         <div class="margin-box">
             <input type="text" class="form-control" placeholder="Host" @bind="_host"/><br/>
             <select class="form-control" placeholder="Mesh mode" @bind="_mesh">
@@ -51,7 +51,7 @@ else
 
         try
         {
-            ssh.UseCommand($"{Commands.NRC_PATH} && ./start 4 {_security} US {_mesh}");
+            ssh.UseCommand($"{Commands.NRC_PATH} && ./start.py 4 {_security} US {_mesh}");
         }
         catch
         {
