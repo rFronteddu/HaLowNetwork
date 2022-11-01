@@ -94,26 +94,37 @@
 
     private async void PingDevices(object? sender, ElapsedEventArgs args)
     {
-        Ping p = new();
-        for (int i = 0; i < _leases.Count; i++)
+        try
         {
-            new Thread(async () =>
+
+            Ping p = new();
+            for (int i = 0; i < _leases.Count; i++)
             {
-                var device = _leases[i];
-
-                var result = p.Send(IPAddress.Parse(device.Ip));
-
-                if (_ping.ContainsKey(device.Ip))
+                new Thread(async () =>
                 {
-                    _ping[device.Ip] = result;
-                }
-                else
-                {
-                    _ping.Add(device.Ip, result);
-                }
+                    var device = _leases[i];
 
-                await InvokeAsync((() => StateHasChanged()));
-            }).Start();
+                    var result = p.Send(IPAddress.Parse(device.Ip));
+
+                    if (_ping.ContainsKey(device.Ip))
+                    {
+                        _ping[device.Ip] = result;
+                    }
+                    else
+                    {
+                        _ping.Add(device.Ip, result);
+                    }
+
+                    await InvokeAsync((() => StateHasChanged()));
+                }).Start();
+        }
+    }
+    catch
+
+    (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
         }
     }
 
