@@ -97,20 +97,23 @@
         Ping p = new();
         for (int i = 0; i < _leases.Count; i++)
         {
-            var device = _leases[i];
-
-            var result = p.Send(IPAddress.Parse(device.Ip));
-
-            if (_ping.ContainsKey(device.Ip))
+            new Thread(() =>
             {
-                _ping[device.Ip] = result;
-            }
-            else
-            {
-                _ping.Add(device.Ip, result);
-            }
+                var device = _leases[i];
 
-            await InvokeAsync((() => StateHasChanged()));
+                var result = p.Send(IPAddress.Parse(device.Ip));
+
+                if (_ping.ContainsKey(device.Ip))
+                {
+                    _ping[device.Ip] = result;
+                }
+                else
+                {
+                    _ping.Add(device.Ip, result);
+                }
+
+                InvokeAsync((() => StateHasChanged()));
+            }).Start();
         }
     }
 
