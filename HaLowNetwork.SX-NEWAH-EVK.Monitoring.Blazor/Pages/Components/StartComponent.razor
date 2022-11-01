@@ -1,0 +1,67 @@
+@using HaLow.Raspbian
+
+@if (!_clicked)
+{
+    <div>
+        <SshLoginComponent></SshLoginComponent>
+        <div class="margin-box">
+            <input type="text" class="form-control" placeholder="Host"/><br/>
+            <select class="form-control" placeholder="Mesh mode">
+                <option value="0">Mesh portal</option>
+                <option value="1">Mesh point</option>
+                <option value="2">Mesh point/AP</option>
+            </select>
+            <select class="form-control" placeholder="Security">
+                <option value="0">Open</option>
+                <option value="1">WPA2-PSK</option>
+                <option value="2">WPA3-OWE</option>
+                <option value="3">WPA3-SAE</option>
+            </select>
+            <button @onclick="Click" class="btn">Start</button>
+        </div>
+    </div>
+}
+else
+{
+    <div class="margin-box">
+        <h3>Request send</h3>
+        <p>Check device on dashboard.</p>
+        <button class="btn" @onclick="Next">Setup next</button>
+    </div>
+}
+
+
+
+
+@code {
+
+    private SshLoginComponent _sshLogin;
+        
+    private string _host = string.Empty;
+    private bool _clicked = false;
+    private int _mesh = 0;
+    private int _security = 0;
+
+    private async void Click()
+    {
+        var ssh = _sshLogin.Service(_host);
+        _clicked = true;
+        StateHasChanged();
+
+        try
+        {
+            ssh.UseCommand($"{Commands.NRC_PATH} && ./start 4 {_security} US {_mesh}");
+        }
+        catch
+        {
+            
+        }
+    }
+
+    private void Next()
+    {
+        _clicked = false;
+        StateHasChanged();
+    }
+
+}

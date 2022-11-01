@@ -3,9 +3,6 @@
 @using HaLowNetwork.SX_NEWAH_EVK.Parse.Models
 @using HaLow.Raspbian
 @using HaLowNetwork.SX_NEWAH_EVK.Parse
-@inject IConfiguration _config
-
-
 
 <div class="row">
 @if (_interface != null)
@@ -50,10 +47,7 @@
              <p>@_errorMessage</p>
              @if (_login)
              {
-                 <div id="login" style="margin: 15px">
-                     <input type="text" placeholder="Username" @bind="_user" class="form-control"/><br/>
-                     <input type="password" placeholder="Password" @bind="_password" class="form-control"/>
-                 </div>
+                 <SshLoginComponent @ref="_sshLogin"></SshLoginComponent>
              }
              else
              {
@@ -83,23 +77,23 @@
     private InterfaceModel _interface;
     private string _errorMessage;
 
+    private SshLoginComponent _sshLogin;
+
     protected override void OnInitialized()
     {
-        _user = _config.GetValue<string>($"{SshService.SSH_CONF_PATH}User");
-        _password = _config.GetValue<string>($"{SshService.SSH_CONF_PATH}Password");
+
 
         Load();
     }
 
-    private string _user;
-    private string _password;
+
     private bool _login = false;
     
     private void Load()
     {
         if (!string.IsNullOrEmpty(Ip))
         {
-            _ssh = new SshService(Ip, _user, _password);
+            _ssh = _sshLogin.Service(Ip);
 
             try
             {

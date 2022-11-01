@@ -1,0 +1,24 @@
+@using HaLowNetwork.SX_NEWAH_EVK.Monitoring.Blazor.Services
+@inject IConfiguration _config
+
+<div id="login" style="margin: 15px">
+    <input type="text" placeholder="Username" @bind="_user" class="form-control"/><br/>
+    <input type="password" placeholder="Password" @bind="_password" class="form-control"/>
+</div>
+
+@code {
+    private string _user;
+    private string _password;
+
+    protected override void OnInitialized()
+    {
+        _user = _config.GetValue<string>($"{SshService.SSH_CONF_PATH}User");
+        _password = _config.GetValue<string>($"{SshService.SSH_CONF_PATH}Password");
+    }
+
+    public SshService Service(string host)
+    {
+        return new SshService(host, _user, _password);
+    }
+
+}

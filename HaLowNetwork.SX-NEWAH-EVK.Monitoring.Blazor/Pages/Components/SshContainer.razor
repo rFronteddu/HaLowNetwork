@@ -1,5 +1,6 @@
 @using HaLowNetwork.SX_NEWAH_EVK.Monitoring.Blazor.Services
 @using Renci.SshNet
+@using HaLow.Raspbian
 <div class="console console-container">
     @for (int i = 0; i < _output.Count; i++)
     {
@@ -30,7 +31,11 @@
         <b>@Ssh.User@@@Ssh.Host #</b> <input class="console console-input" @bind="_input"/><span @onclick="Send"  style="float: right">Send</span>
     </div>
     <div style="padding-top:15px;">
-        <ConsoleSuggestComponent Text="Ping"></ConsoleSuggestComponent> <ConsoleSuggestComponent Text="Reboot"></ConsoleSuggestComponent>
+        @foreach (var s in _suggests)
+        {
+            ConsoleSuggestComponent component = s;
+            <ConsoleSuggestComponent @ref="@component" Click="CommandClick"></ConsoleSuggestComponent>
+        }
     </div>
 </div>
 @code {
@@ -41,8 +46,43 @@
     private List<SshCommand> _output = new();
     private string _input = string.Empty;
 
+    private List<ConsoleSuggestComponent> _suggests = new();
+
     protected override void OnInitialized()
     {
+        Init();
+    }
+
+    private void CommandClick(string command)
+    {
+        _input = command;
+        StateHasChanged();
+    }
+
+    private void Init()
+    {
+        _suggests = new List<ConsoleSuggestComponent>()
+        {
+            new ()
+            {
+                Text = "Ping",
+                Commnand = "ping <address> -c <count>",
+            },
+            new ()
+            {
+                Text = "WPA status",
+                Commnand = Commands.WPA_STATUS,
+            
+            },
+            new ()
+            {
+                Text = "Reboot",
+                Commnand = Commands.REBOOT,
+            
+            }
+        };
+        
+        StateHasChanged();
     }
 
     private void Send()
